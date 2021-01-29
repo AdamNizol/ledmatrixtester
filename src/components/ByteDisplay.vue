@@ -1,6 +1,6 @@
 <template>
   <div class="displayContainer">
-    <h3>{{byteDat}}</h3>
+    <h3>{{bytes}}</h3>
   </div>
 </template>
 
@@ -11,41 +11,41 @@ export default {
     value: Array
   },
   computed: {
-
-    //right now its: RR RR GG GG BB BB RR RR GG GG BB BB
-    //should be:     RR RR RR RR GG GG GG GG BB BB BB BB
-
-    byteDat: function(){
+    bits: function(){
       let result = "";
 
+      let colBits = ["", "",""]
       for(let i = 0; i < 32; i++){
-
-        let colBits = ""
         for(let j=1; j<4; j++){
           for(let y = 0; y < 16; y++){
             if(this.value[i+(y*32)][j] == "0"){
-              colBits += "0"
+              colBits[j-1] += "0"
             }else{
-              colBits += "1"
+              colBits[j-1] += "1"
             }
           }
         }
+      }
 
-        for(let k = 0; k < colBits.length/8 ; k++){
-          let byteInBits = colBits.substr(8*k,8);
-          console.log(parseInt(byteInBits,2))
-          console.log(byteInBits)
-          let hexByte = parseInt(byteInBits,2).toString(16);
-          if(hexByte.length < 2){ hexByte = "0"+hexByte }
-          result += hexByte+" "
-          //result += byteInBits
-        }
-
-
+      for(let j = 0; j < colBits.length; j++){
+        result += colBits[j];
       }
 
       return result;
+    },
+    bytes: function(){
+      let result = ""
+
+      for(let i = 0; i < this.bits.length/8 ; i++){
+        let byteInBits = this.bits.substr(8*i,8);
+        let hexByte = parseInt(byteInBits,2).toString(16);
+        if(hexByte.length < 2){ hexByte = "0"+hexByte }
+        result += hexByte+" "
+      }
+
+      return result
     }
+
   }
 }
 </script>
