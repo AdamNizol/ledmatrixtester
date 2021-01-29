@@ -1,6 +1,10 @@
 <template>
   <div class="displayContainer">
-    <h3>{{bytes}}</h3>
+    <h3>
+      <span style="color:red">{{redBytes}}</span>
+      <span style="color:green">{{greenBytes}}</span>
+      <span style="color:blue">{{blueBytes}}</span>
+    </h3>
   </div>
 </template>
 
@@ -33,19 +37,32 @@ export default {
 
       return result;
     },
-    
+
     bytes: function(){
       let result = ""
 
       for(let i = 0; i < this.bits.length/8 ; i++){
         let byteInBits = this.bits.substr(8*i,8);
-        let hexByte = parseInt(byteInBits,2).toString(16);
+        let hexByte = parseInt(byteInBits,2).toString(16).toUpperCase();
         if(hexByte.length < 2){ hexByte = "0"+hexByte }
         result += hexByte+" "
       }
 
       return result
-    }
+    },
+
+    redBytes: function(){
+      let length = this.bytes.length/3;
+      return this.bytes.substr(0,length);
+    },
+    greenBytes: function(){
+      let length = this.bytes.length/3;
+      return this.bytes.substr(length,length);
+    },
+    blueBytes: function(){
+      let length = this.bytes.length/3;
+      return this.bytes.substr(2*length,length);
+    },
 
   }
 }
@@ -56,5 +73,11 @@ export default {
 .displayContainer{
   width: 80vw;
   border: 2px solid black;
+  background-color: #ddd;
+  border-radius: 0 0 5px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
 }
 </style>

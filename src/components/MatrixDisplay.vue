@@ -69,7 +69,7 @@ export default {
   .pixel{
     width: 2.5vw;
     height: 2.5vw;
-    border: 1px solid black;
+    border: 2px solid black;
     box-sizing: border-box;
     cursor:pointer;
   }
