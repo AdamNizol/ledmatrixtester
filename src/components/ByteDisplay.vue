@@ -33,6 +33,7 @@ export default {
 
       return result;
     },
+    
     bytes: function(){
       let result = ""
 
